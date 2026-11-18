@@ -3,158 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advent in Steglitz</title>
+  <title>Advent in Steglitz – Türchen 2</title>
 
   <style>
     :root {
-      --creme: #f8f6ef;
-      --gruen: #244a3b;
-      --gold: #b78635;
-      --text: #24352d;
+      --nachtblau: #0a1c38;
+      --creme: #fff9ef;
+      --rot: #e94d62;
+      --gold: #f3c65e;
     }
 
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
 
     body {
       margin: 0;
-      background: var(--creme);
-      color: var(--text);
+      padding: 2rem 1rem;
+      text-align: center;
       font-family: system-ui, sans-serif;
+      background: var(--nachtblau);
+      color: var(--creme);
     }
 
     main {
-      width: min(960px, calc(100% - 2rem));
-      margin: 2.5rem auto;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
+      max-width: 30rem;
+      margin: auto;
     }
 
     h1 {
-      margin: 0;
-      color: var(--gruen);
+      margin-top: 0;
       font-family: Georgia, serif;
-      font-size: clamp(2rem, 7vw, 3.5rem);
-    }
-
-    .tuerchen {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-      gap: 0.75rem;
-    }
-
-    button, input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
+      font-size: clamp(2rem, 8vw, 3rem);
     }
 
     .tuer {
-      min-height: 64px;
-      padding: 0.75rem;
-      border: 2px solid var(--gold);
-      border-radius: 12px;
-      background: var(--gruen);
-      color: white;
-      font-size: 1.4rem;
-      font-weight: bold;
+      position: relative;
+      display: block;
+      width: min(100%, 17rem);
+      aspect-ratio: 165 / 140;
+      margin: 1.5rem auto;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      background: var(--creme);
+      cursor: pointer;
     }
 
-    .tuer:disabled {
-      background: #ede9de;
-      color: #625c51;
-      border-color: #d3c9b5;
-      cursor: default;
+    /* Zeigt nur den Ausschnitt mit der 2 aus dem Kalenderbild. */
+    .tuer img {
+      position: absolute;
+      width: 498.79%;
+      max-width: none;
+      height: auto;
+      left: -102.42%;
+      top: -17.86%;
+      pointer-events: none;
     }
 
     .raetsel {
-      max-width: 480px;
-      margin: 1.5rem auto 0;
       padding: 1.25rem;
-      border: 2px solid var(--gold);
-      border-radius: 16px;
-      background: white;
+      border: 3px solid var(--rot);
+      border-radius: 1rem;
+      background: var(--creme);
+      color: var(--nachtblau);
     }
 
-    .raetsel h2 {
-      margin-top: 0;
-      color: var(--gruen);
-    }
+    h2 { margin-top: 0; }
 
     .aufgabe {
-      font-size: clamp(1.25rem, 5vw, 1.75rem);
+      font-size: clamp(1.25rem, 5.5vw, 1.8rem);
       font-weight: bold;
     }
 
     form {
       display: grid;
       gap: 0.65rem;
+      max-width: 19rem;
+      margin: auto;
     }
 
     input, .bestaetigen {
       width: 100%;
       min-height: 48px;
       padding: 0.65rem;
-      border-radius: 8px;
+      border: 2px solid var(--nachtblau);
+      border-radius: 0.5rem;
+      font: inherit;
     }
 
-    input {
-      border: 1px solid var(--gruen);
-      background: var(--creme);
-    }
+    input { text-align: center; }
 
     .bestaetigen {
-      border: 0;
-      background: var(--gruen);
-      color: white;
+      background: var(--nachtblau);
+      color: var(--creme);
+      cursor: pointer;
     }
 
-    #meldung {
-      margin: 0;
-      font-weight: bold;
-    }
-
-    #meldung:not(:empty) {
-      margin-top: 0.9rem;
-    }
+    #meldung:empty { margin: 0; }
 
     .stern {
       display: block;
-      width: min(180px, 100%);
+      width: min(12rem, 100%);
       margin: 0.75rem auto 0;
     }
-
-    [hidden] { display: none; }
   </style>
 </head>
 
 <body>
   <main>
-    <header>
-      <h1>Advent in Steglitz</h1>
-      <p>Tippe auf ein Türchen und löse das Rätsel.</p>
-    </header>
+    <h1>Advent in Steglitz</h1>
+    <p>Tippe auf Türchen 2.</p>
 
-    <div class="tuerchen" aria-label="Kalendertürchen">
-      <button class="tuer" id="tuer2" type="button"
-              aria-label="Türchen 2" aria-controls="raetsel2"
-              aria-expanded="false">2</button>
-      <button class="tuer" disabled>4</button>
-      <button class="tuer" disabled>6</button>
-      <button class="tuer" disabled>8</button>
-      <button class="tuer" disabled>10</button>
-      <button class="tuer" disabled>12</button>
-      <button class="tuer" disabled>14</button>
-      <button class="tuer" disabled>16</button>
-      <button class="tuer" disabled>18</button>
-      <button class="tuer" disabled>20</button>
-      <button class="tuer" disabled>22</button>
-      <button class="tuer" disabled>24</button>
-    </div>
+    <button class="tuer" id="tuer2" type="button"
+            aria-label="Türchen 2" aria-controls="raetsel2"
+            aria-expanded="false">
+      <img src="IMG_2285.jpeg" alt="">
+    </button>
 
     <section class="raetsel" id="raetsel2" aria-labelledby="titel2" hidden>
       <h2 id="titel2">Türchen 2</h2>
@@ -175,9 +139,9 @@
            role="img" aria-label="Goldener Stern mit dem Buchstaben S" hidden>
         <polygon points="50,4 63,34 96,37 71,59 79,92
                          50,75 21,92 29,59 4,37 37,34"
-                 fill="#e5b84d" stroke="#b78635" stroke-width="2" />
-        <text x="50" y="64" text-anchor="middle"
-              fill="#244a3b" font-size="36" font-weight="bold">S</text>
+                 fill="#f3c65e" stroke="#a86d25" stroke-width="2"/>
+        <text x="50" y="64" text-anchor="middle" fill="#0a1c38"
+              font-size="38" font-weight="bold">S</text>
       </svg>
     </section>
   </main>
@@ -195,14 +159,14 @@
       tuer.setAttribute("aria-expanded", String(!raetsel.hidden));
     });
 
-    formular.addEventListener("submit", (ereignis) => {
-      ereignis.preventDefault();
+    formular.addEventListener("submit", (event) => {
+      event.preventDefault();
 
       if (eingabe.value.trim() === "52") {
-        stern.hidden = false;
+        stern.removeAttribute("hidden");
         meldung.textContent = "Richtig! Dein Buchstabe ist S.";
       } else {
-        stern.hidden = true;
+        stern.setAttribute("hidden", "");
         eingabe.value = "";
         meldung.textContent = "Noch nicht richtig. Versuch es noch einmal!";
         eingabe.focus();
