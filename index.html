@@ -1,44 +1,213 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mein Rätsel-Adventskalender</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advent in Steglitz</title>
+
   <style>
+    :root {
+      --creme: #f8f6ef;
+      --gruen: #244a3b;
+      --gold: #b78635;
+      --text: #24352d;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
+      margin: 0;
+      background: var(--creme);
+      color: var(--text);
       font-family: system-ui, sans-serif;
-      background: #f8f3e8;
-      color: #173d34;
-      max-width: 36rem;
-      margin: 2rem auto;
-      padding: 0 1rem;
     }
 
-    details {
-      background: white;
-      border: 1px solid #d8ded8;
-      border-radius: 12px;
-      padding: 1rem;
+    main {
+      width: min(960px, calc(100% - 2rem));
+      margin: 2.5rem auto;
     }
 
-    summary {
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--gruen);
+      font-family: Georgia, serif;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+    }
+
+    .tuerchen {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 0.75rem;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
       cursor: pointer;
+    }
+
+    .tuer {
+      min-height: 64px;
+      padding: 0.75rem;
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      background: var(--gruen);
+      color: white;
+      font-size: 1.4rem;
       font-weight: bold;
     }
+
+    .tuer:disabled {
+      background: #ede9de;
+      color: #625c51;
+      border-color: #d3c9b5;
+      cursor: default;
+    }
+
+    .raetsel {
+      max-width: 480px;
+      margin: 1.5rem auto 0;
+      padding: 1.25rem;
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      background: white;
+    }
+
+    .raetsel h2 {
+      margin-top: 0;
+      color: var(--gruen);
+    }
+
+    .aufgabe {
+      font-size: clamp(1.25rem, 5vw, 1.75rem);
+      font-weight: bold;
+    }
+
+    form {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    input, .bestaetigen {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.65rem;
+      border-radius: 8px;
+    }
+
+    input {
+      border: 1px solid var(--gruen);
+      background: var(--creme);
+    }
+
+    .bestaetigen {
+      border: 0;
+      background: var(--gruen);
+      color: white;
+    }
+
+    #meldung {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    #meldung:not(:empty) {
+      margin-top: 0.9rem;
+    }
+
+    .stern {
+      display: block;
+      width: min(180px, 100%);
+      margin: 0.75rem auto 0;
+    }
+
+    [hidden] { display: none; }
   </style>
 </head>
+
 <body>
-  <h1>Mein Rätsel-Adventskalender</h1>
-  <p>Tippe auf ein Türchen und entdecke das Rätsel.</p>
+  <main>
+    <header>
+      <h1>Advent in Steglitz</h1>
+      <p>Tippe auf ein Türchen und löse das Rätsel.</p>
+    </header>
 
-  <details>
-    <summary>Türchen 1</summary>
-    <p>Was wird größer, je mehr man davon wegnimmt?</p>
+    <div class="tuerchen" aria-label="Kalendertürchen">
+      <button class="tuer" id="tuer2" type="button"
+              aria-label="Türchen 2" aria-controls="raetsel2"
+              aria-expanded="false">2</button>
+      <button class="tuer" disabled>4</button>
+      <button class="tuer" disabled>6</button>
+      <button class="tuer" disabled>8</button>
+      <button class="tuer" disabled>10</button>
+      <button class="tuer" disabled>12</button>
+      <button class="tuer" disabled>14</button>
+      <button class="tuer" disabled>16</button>
+      <button class="tuer" disabled>18</button>
+      <button class="tuer" disabled>20</button>
+      <button class="tuer" disabled>22</button>
+      <button class="tuer" disabled>24</button>
+    </div>
 
-    <details>
-      <summary>Lösung anzeigen</summary>
-      <p>Ein Loch.</p>
-    </details>
-  </details>
+    <section class="raetsel" id="raetsel2" aria-labelledby="titel2" hidden>
+      <h2 id="titel2">Türchen 2</h2>
+      <p class="aufgabe">(9 − 5) × 7 + 6 × 4 = ?</p>
+
+      <form id="formular2">
+        <label for="ergebnis2">Dein Ergebnis</label>
+        <input id="ergebnis2" type="text" inputmode="numeric"
+               autocomplete="off" required>
+        <button class="bestaetigen" type="submit">
+          Ergebnis bestätigen
+        </button>
+      </form>
+
+      <p id="meldung" role="status"></p>
+
+      <svg id="stern2" class="stern" viewBox="0 0 100 100"
+           role="img" aria-label="Goldener Stern mit dem Buchstaben S" hidden>
+        <polygon points="50,4 63,34 96,37 71,59 79,92
+                         50,75 21,92 29,59 4,37 37,34"
+                 fill="#e5b84d" stroke="#b78635" stroke-width="2" />
+        <text x="50" y="64" text-anchor="middle"
+              fill="#244a3b" font-size="36" font-weight="bold">S</text>
+      </svg>
+    </section>
+  </main>
+
+  <script>
+    const tuer = document.getElementById("tuer2");
+    const raetsel = document.getElementById("raetsel2");
+    const formular = document.getElementById("formular2");
+    const eingabe = document.getElementById("ergebnis2");
+    const meldung = document.getElementById("meldung");
+    const stern = document.getElementById("stern2");
+
+    tuer.addEventListener("click", () => {
+      raetsel.hidden = !raetsel.hidden;
+      tuer.setAttribute("aria-expanded", String(!raetsel.hidden));
+    });
+
+    formular.addEventListener("submit", (ereignis) => {
+      ereignis.preventDefault();
+
+      if (eingabe.value.trim() === "52") {
+        stern.hidden = false;
+        meldung.textContent = "Richtig! Dein Buchstabe ist S.";
+      } else {
+        stern.hidden = true;
+        eingabe.value = "";
+        meldung.textContent = "Noch nicht richtig. Versuch es noch einmal!";
+        eingabe.focus();
+      }
+    });
+  </script>
 </body>
 </html>
