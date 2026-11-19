@@ -6,7 +6,7 @@
 
   <title>Adventskalender-Rätsel für Jori</title>
 
-  <!-- Die Schriftarten Pacifico und Oswald laden -->
+  <!-- Schriftarten Pacifico und Oswald laden -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -15,7 +15,21 @@
   >
 
   <style>
-    /* FARBEN UND ALLGEMEINES DESIGN */
+    /* FARBEN DER RECHTEN PALETTE */
+
+    :root {
+      --blau: #00345c;
+      --pink: #ed2860;
+      --rot: #f52232;
+      --creme: #e8ddce;
+      --beere: #a51e50;
+
+      --richtig: #88e788;
+      --falsch: #ff0000;
+      --antwort-schrift: #511f1a;
+    }
+
+    /* ALLGEMEINES DESIGN */
 
     * {
       box-sizing: border-box;
@@ -25,8 +39,8 @@
       margin: 0;
       min-height: 100vh;
       padding: 35px 20px;
-      background-color: #511f1a;
-      color: #ffffff;
+      background-color: var(--blau);
+      color: var(--creme);
       font-family: Arial, sans-serif;
       text-align: center;
       transition: background-color 0.4s, color 0.4s;
@@ -37,24 +51,28 @@
       margin: 0 auto;
     }
 
+    /* ÜBERSCHRIFT */
+
     h1 {
       margin: 10px 0 20px;
-      color: #e47f97;
+      color: var(--pink);
       font-family: "Pacifico", cursive;
       font-size: clamp(2.6rem, 7vw, 4.5rem);
       font-weight: bold;
       line-height: 1.5;
     }
 
+    /* TEXT UNTER DER ÜBERSCHRIFT */
+
     .einleitung {
       margin-bottom: 35px;
-      color: #874025;
+      color: var(--creme);
       font-family: "Oswald", sans-serif;
       font-size: 1.3rem;
       line-height: 1.6;
     }
 
-    /* DIE TÜRCHEN */
+    /* TÜRCHEN */
 
     .kalender {
       display: grid;
@@ -65,28 +83,31 @@
     .tuerchen {
       min-height: 130px;
       padding: 20px;
-      border: 2px solid #874025;
+      border: 2px solid var(--pink);
       border-radius: 14px;
-      background-color: #874025;
-      color: #aa344a;
+      background-color: var(--beere);
+      color: var(--creme);
       font-family: "Oswald", sans-serif;
       font-size: 2.5rem;
       cursor: pointer;
       box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s;
+      transition:
+        transform 0.2s,
+        background-color 0.2s;
     }
 
     .tuerchen:hover {
       transform: translateY(-4px);
+      background-color: var(--rot);
     }
 
     button:focus-visible,
     input:focus-visible {
-      outline: 3px solid #e47f97;
+      outline: 3px solid var(--pink);
       outline-offset: 5px;
     }
 
-    /* DER BEREICH MIT DEM RÄTSEL */
+    /* RÄTSELBEREICH */
 
     .raetselbereich {
       margin-top: 35px;
@@ -94,6 +115,7 @@
       border: 2px solid currentColor;
       border-radius: 18px;
       background-color: rgba(255, 255, 255, 0.08);
+      scroll-margin-top: 20px;
     }
 
     .raetselbereich h2 {
@@ -117,10 +139,10 @@
       max-width: 300px;
       margin: 0 auto 16px;
       padding: 13px;
-      border: 2px solid #511f1a;
+      border: 2px solid var(--beere);
       border-radius: 8px;
-      background-color: #ffffff;
-      color: #511f1a;
+      background-color: var(--creme);
+      color: var(--blau);
       font-family: Arial, sans-serif;
       font-size: 1.2rem;
       text-align: center;
@@ -128,10 +150,10 @@
 
     .knopf {
       padding: 12px 20px;
-      border: 2px solid #511f1a;
+      border: 2px solid var(--beere);
       border-radius: 8px;
-      background-color: #ffd65a;
-      color: #511f1a;
+      background-color: var(--creme);
+      color: var(--blau);
       font-family: Arial, sans-serif;
       font-size: 1rem;
       cursor: pointer;
@@ -157,31 +179,37 @@
       font-size: 1.4rem;
     }
 
-    /* FARBEN BEI RICHTIGER UND FALSCHER ANTWORT */
+    /* RICHTIGE ANTWORT: GRÜNER HINTERGRUND */
 
     body.richtig {
-      background-color: #88E788;
-      color: #511f1a;
+      background-color: var(--richtig);
+      color: var(--antwort-schrift);
     }
+
+    /* FALSCHE ANTWORT: ROTER HINTERGRUND */
 
     body.falsch {
-      background-color: #FF0000;
-      color: #511f1a;
+      background-color: var(--falsch);
+      color: var(--antwort-schrift);
     }
 
-    /* Auch Überschrift, Einleitung und Türchenzahlen
-       bekommen nach der Prüfung die gewünschte Schriftfarbe. */
+    /* NACH DER PRÜFUNG WIRD DIE SCHRIFT DUNKELBRAUN.
+       DIE SCHRIFTARTEN BLEIBEN DABEI ERHALTEN. */
 
     body.richtig h1,
     body.falsch h1,
     body.richtig .einleitung,
     body.falsch .einleitung,
     body.richtig .tuerchen,
-    body.falsch .tuerchen {
-      color: #511f1a;
+    body.falsch .tuerchen,
+    body.richtig input,
+    body.falsch input,
+    body.richtig .knopf,
+    body.falsch .knopf {
+      color: var(--antwort-schrift);
     }
 
-    /* AUF KLEINEN BILDSCHIRMEN: ZWEI TÜRCHEN PRO REIHE */
+    /* HANDYANSICHT: ZWEI TÜRCHEN PRO REIHE */
 
     @media (max-width: 600px) {
       .kalender {
@@ -208,9 +236,10 @@
       Wähle ein Türchen und löse das Rätsel dahinter!
     </p>
 
-    <!-- Die Türchen werden automatisch eingefügt. -->
+    <!-- Hier werden die zwölf Türchen automatisch eingefügt. -->
     <div class="kalender" id="kalender"></div>
 
+    <!-- Dieser Bereich erscheint nach dem Klick auf ein Türchen. -->
     <section
       class="raetselbereich"
       id="raetselbereich"
@@ -247,20 +276,29 @@
 
   <script>
     /*
-      HIER KANNST DU DEINE RÄTSEL ÄNDERN.
+      HIER KANNST DU DEINE RÄTSEL EINTRAGEN.
 
-      aufgabe = Was soll Jori lösen?
-      antwort = Welche Antwort ist richtig?
-      erfolgstext = Was erscheint nach der richtigen Antwort?
+      aufgabe:
+      Der Text des Rätsels.
 
-      null bedeutet: Es ist noch keine Antwort eingetragen.
+      antwort:
+      Die richtige Antwort in Anführungszeichen.
+      Beispiel: "52" oder "Handtuch"
+
+      erfolgstext:
+      Der Text nach einer richtigen Antwort.
+
+      null:
+      Dieses Türchen hat noch keine fertige Aufgabe
+      mit Antwortprüfung.
     */
 
     const raetsel = {
       2: {
         aufgabe: "(9 − 5) × 7 + 6 × 4 = ?",
         antwort: "52",
-        erfolgstext: "Du darfst das Türchen mit dem Smiley öffnen."
+        erfolgstext:
+          "Du darfst das Türchen mit dem Smiley öffnen."
       },
 
       4: {
@@ -352,13 +390,15 @@
       return String(text).trim().toLocaleLowerCase("de-DE");
     }
 
-    /* Für jedes Rätsel wird ein Türchen erstellt. */
+    /* DIE ZWÖLF TÜRCHEN ERSTELLEN */
+
     Object.keys(raetsel).forEach(function (nummer) {
       const knopf = document.createElement("button");
 
       knopf.type = "button";
       knopf.className = "tuerchen";
       knopf.textContent = nummer;
+
       knopf.setAttribute(
         "aria-label",
         "Türchen " + nummer + " öffnen"
@@ -372,14 +412,18 @@
       kalender.appendChild(knopf);
     });
 
+    /* EIN TÜRCHEN ÖFFNEN */
+
     function tuerchenOeffnen(nummer) {
       aktuelleNummer = nummer;
+
       const aktuellesRaetsel = raetsel[nummer];
 
       farbenZuruecksetzen();
 
       titel.textContent = "Türchen " + nummer;
       aufgabe.textContent = aktuellesRaetsel.aufgabe;
+
       antwortFeld.value = "";
       meldung.replaceChildren();
 
@@ -394,11 +438,13 @@
       titel.focus({ preventScroll: true });
     }
 
-    /* Antwort per Knopfdruck oder Enter prüfen. */
+    /* DIE EINGEGEBENE ANTWORT PRÜFEN */
+
     formular.addEventListener("submit", function (ereignis) {
       ereignis.preventDefault();
 
       const aktuellesRaetsel = raetsel[aktuelleNummer];
+
       const eingabe = normalisieren(antwortFeld.value);
       const loesung = normalisieren(aktuellesRaetsel.antwort);
 
@@ -427,6 +473,8 @@
         antwortFeld.select();
       }
     });
+
+    /* ZURÜCK ZUM KALENDER UND ZU DEN STARTFARBEN */
 
     zurueck.addEventListener("click", function () {
       farbenZuruecksetzen();
