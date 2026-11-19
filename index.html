@@ -3,173 +3,412 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advent in Steglitz – Türchen 2</title>
+
+  <title>Adventskalender-Rätsel für Jori</title>
 
   <style>
-    :root {
-      --nachtblau: #0a1c38;
-      --creme: #fff9ef;
-      --rot: #e94d62;
-      --gold: #f3c65e;
-    }
+    /* FARBEN UND ALLGEMEINES DESIGN */
 
-    * { box-sizing: border-box; }
-    [hidden] { display: none !important; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      padding: 2rem 1rem;
+      min-height: 100vh;
+      padding: 35px 20px;
+      background-color: #102449;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
       text-align: center;
-      font-family: system-ui, sans-serif;
-      background: var(--nachtblau);
-      color: var(--creme);
+      transition: background-color 0.4s, color 0.4s;
     }
 
     main {
-      max-width: 30rem;
-      margin: auto;
+      max-width: 950px;
+      margin: 0 auto;
     }
 
     h1 {
-      margin-top: 0;
-      font-family: Georgia, serif;
-      font-size: clamp(2rem, 8vw, 3rem);
+      margin: 10px 0 20px;
+      color: #ff9999;
+      font-family: "Vivaldi", "Brush Script MT", cursive;
+      font-size: clamp(2.6rem, 7vw, 4.5rem);
+      font-weight: normal;
     }
 
-    .tuer {
-      position: relative;
+    .einleitung {
+      margin-bottom: 35px;
+      line-height: 1.6;
+    }
+
+    /* DIE GELBEN TÜRCHEN */
+
+    .kalender {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .tuerchen {
+      min-height: 130px;
+      padding: 20px;
+      border: 2px solid #ffeaa0;
+      border-radius: 14px;
+      background-color: #ffd65a;
+      color: #102449;
+      font-family: Courier, "Courier New", monospace;
+      font-size: 2.5rem;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #b78b20;
+      transition: transform 0.2s;
+    }
+
+    .tuerchen:hover {
+      transform: translateY(-4px);
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #ff9999;
+      outline-offset: 5px;
+    }
+
+    /* DER BEREICH MIT DEM RÄTSEL */
+
+    .raetselbereich {
+      margin-top: 35px;
+      padding: 28px 20px;
+      border: 2px solid currentColor;
+      border-radius: 18px;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .raetselbereich h2 {
+      margin-top: 0;
+    }
+
+    #aufgabe {
+      font-size: 1.5rem;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
+    label {
       display: block;
-      width: min(100%, 17rem);
-      aspect-ratio: 165 / 140;
-      margin: 1.5rem auto;
-      padding: 0;
-      overflow: hidden;
-      border: 0;
-      background: var(--creme);
+      margin: 22px 0 10px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto 16px;
+      padding: 13px;
+      border: 2px solid #102449;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: #102449;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .knopf {
+      padding: 12px 20px;
+      border: 2px solid #102449;
+      border-radius: 8px;
+      background-color: #ffd65a;
+      color: #102449;
+      font-size: 1rem;
       cursor: pointer;
     }
 
-    /* Zeigt nur den Ausschnitt mit der 2 aus dem Kalenderbild. */
-    .tuer img {
-      position: absolute;
-      width: 498.79%;
-      max-width: none;
-      height: auto;
-      left: -102.42%;
-      top: -17.86%;
-      pointer-events: none;
+    .zurueck {
+      margin-top: 20px;
     }
 
-    .raetsel {
-      padding: 1.25rem;
-      border: 3px solid var(--rot);
-      border-radius: 1rem;
-      background: var(--creme);
-      color: var(--nachtblau);
+    #meldung {
+      margin-top: 24px;
+      line-height: 1.6;
     }
 
-    h2 { margin-top: 0; }
-
-    .aufgabe {
-      font-size: clamp(1.25rem, 5.5vw, 1.8rem);
+    .yippie {
+      margin: 10px 0;
+      font-family: Courier, "Courier New", monospace;
+      font-size: clamp(3rem, 10vw, 5rem);
       font-weight: bold;
     }
 
-    form {
-      display: grid;
-      gap: 0.65rem;
-      max-width: 19rem;
-      margin: auto;
+    .erfolgstext {
+      font-size: 1.4rem;
     }
 
-    input, .bestaetigen {
-      width: 100%;
-      min-height: 48px;
-      padding: 0.65rem;
-      border: 2px solid var(--nachtblau);
-      border-radius: 0.5rem;
-      font: inherit;
+    /* DIE GANZE SEITE ÄNDERT IHRE FARBE */
+
+    body.richtig {
+      background-color: #c9efbd;
+      color: #102449;
     }
 
-    input { text-align: center; }
-
-    .bestaetigen {
-      background: var(--nachtblau);
-      color: var(--creme);
-      cursor: pointer;
+    body.falsch {
+      background-color: #ffc4c4;
+      color: #102449;
     }
 
-    #meldung:empty { margin: 0; }
+    body.richtig h1,
+    body.falsch h1 {
+      color: #102449;
+    }
 
-    .stern {
-      display: block;
-      width: min(12rem, 100%);
-      margin: 0.75rem auto 0;
+    /* AUF KLEINEN BILDSCHIRMEN: ZWEI TÜRCHEN PRO REIHE */
+
+    @media (max-width: 600px) {
+      .kalender {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .tuerchen {
+        min-height: 105px;
+      }
+    }
+
+    [hidden] {
+      display: none !important;
     }
   </style>
 </head>
 
 <body>
   <main>
-    <h1>Advent in Steglitz</h1>
-    <p>Tippe auf Türchen 2.</p>
+    <h1>Adventskalender-Rätsel für Jori</h1>
 
-    <button class="tuer" id="tuer2" type="button"
-            aria-label="Türchen 2" aria-controls="raetsel2"
-            aria-expanded="false">
-      <img src="IMG_2285.jpeg" alt="">
-    </button>
+    <p class="einleitung">
+      Wähle ein Türchen und löse das Rätsel dahinter!
+    </p>
 
-    <section class="raetsel" id="raetsel2" aria-labelledby="titel2" hidden>
-      <h2 id="titel2">Türchen 2</h2>
-      <p class="aufgabe">(9 − 5) × 7 + 6 × 4 = ?</p>
+    <!-- Die Türchen werden automatisch eingefügt. -->
+    <div class="kalender" id="kalender"></div>
 
-      <form id="formular2">
-        <label for="ergebnis2">Dein Ergebnis</label>
-        <input id="ergebnis2" type="text" inputmode="numeric"
-               autocomplete="off" required>
-        <button class="bestaetigen" type="submit">
-          Ergebnis bestätigen
+    <section
+      class="raetselbereich"
+      id="raetselbereich"
+      aria-labelledby="raetselTitel"
+      hidden
+    >
+      <h2 id="raetselTitel" tabindex="-1"></h2>
+
+      <p id="aufgabe"></p>
+
+      <form id="antwortFormular" hidden>
+        <label for="antwort">Deine Antwort:</label>
+
+        <input
+          type="text"
+          id="antwort"
+          placeholder="Antwort eingeben"
+          autocomplete="off"
+          required
+        >
+
+        <button class="knopf" type="submit">
+          Antwort prüfen
         </button>
       </form>
 
-      <p id="meldung" role="status"></p>
+      <div id="meldung" role="status" aria-live="polite"></div>
 
-      <svg id="stern2" class="stern" viewBox="0 0 100 100"
-           role="img" aria-label="Goldener Stern mit dem Buchstaben S" hidden>
-        <polygon points="50,4 63,34 96,37 71,59 79,92
-                         50,75 21,92 29,59 4,37 37,34"
-                 fill="#f3c65e" stroke="#a86d25" stroke-width="2"/>
-        <text x="50" y="64" text-anchor="middle" fill="#0a1c38"
-              font-size="38" font-weight="bold">S</text>
-      </svg>
+      <button class="knopf zurueck" id="zurueck" type="button">
+        Zurück zum Kalender
+      </button>
     </section>
   </main>
 
   <script>
-    const tuer = document.getElementById("tuer2");
-    const raetsel = document.getElementById("raetsel2");
-    const formular = document.getElementById("formular2");
-    const eingabe = document.getElementById("ergebnis2");
-    const meldung = document.getElementById("meldung");
-    const stern = document.getElementById("stern2");
+    /*
+      HIER KANNST DU SPÄTER DEINE RÄTSEL ÄNDERN.
 
-    tuer.addEventListener("click", () => {
-      raetsel.hidden = !raetsel.hidden;
-      tuer.setAttribute("aria-expanded", String(!raetsel.hidden));
+      aufgabe = Was soll Jori lösen?
+      antwort = Welche Antwort ist richtig?
+      erfolgstext = Was erscheint nach der richtigen Antwort?
+
+      null bedeutet: Es ist noch keine Antwort eingetragen.
+    */
+
+    const raetsel = {
+      2: {
+        aufgabe: "(9 − 5) × 7 + 6 × 4 = ?",
+        antwort: "52",
+        erfolgstext: "Du darfst das Türchen mit dem Smiley öffnen."
+      },
+
+      4: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      6: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      8: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      10: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      12: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      14: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      16: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      18: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      20: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      22: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      },
+
+      24: {
+        aufgabe: "Hier wartet bald dein nächstes Rätsel!",
+        antwort: null,
+        erfolgstext: "Du hast das Rätsel gelöst!"
+      }
+    };
+
+    /* AB HIER MUSST DU FÜR NEUE RÄTSEL NICHTS ÄNDERN. */
+
+    const kalender = document.getElementById("kalender");
+    const bereich = document.getElementById("raetselbereich");
+    const titel = document.getElementById("raetselTitel");
+    const aufgabe = document.getElementById("aufgabe");
+    const formular = document.getElementById("antwortFormular");
+    const antwortFeld = document.getElementById("antwort");
+    const meldung = document.getElementById("meldung");
+    const zurueck = document.getElementById("zurueck");
+
+    let aktuelleNummer = null;
+    let letztesTuerchen = null;
+
+    function farbenZuruecksetzen() {
+      document.body.classList.remove("richtig", "falsch");
+    }
+
+    function normalisieren(text) {
+      return String(text).trim().toLocaleLowerCase("de-DE");
+    }
+
+    /* Für jedes Rätsel wird ein gelbes Türchen erstellt. */
+    Object.keys(raetsel).forEach(function (nummer) {
+      const knopf = document.createElement("button");
+
+      knopf.type = "button";
+      knopf.className = "tuerchen";
+      knopf.textContent = nummer;
+      knopf.setAttribute("aria-label", "Türchen " + nummer + " öffnen");
+
+      knopf.addEventListener("click", function () {
+        letztesTuerchen = knopf;
+        tuerchenOeffnen(nummer);
+      });
+
+      kalender.appendChild(knopf);
     });
 
-    formular.addEventListener("submit", (event) => {
-      event.preventDefault();
+    function tuerchenOeffnen(nummer) {
+      aktuelleNummer = nummer;
+      const aktuellesRaetsel = raetsel[nummer];
 
-      if (eingabe.value.trim() === "52") {
-        stern.removeAttribute("hidden");
-        meldung.textContent = "Richtig! Dein Buchstabe ist S.";
+      farbenZuruecksetzen();
+
+      titel.textContent = "Türchen " + nummer;
+      aufgabe.textContent = aktuellesRaetsel.aufgabe;
+      antwortFeld.value = "";
+      meldung.replaceChildren();
+
+      formular.hidden = aktuellesRaetsel.antwort === null;
+      bereich.hidden = false;
+
+      bereich.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      titel.focus({ preventScroll: true });
+    }
+
+    /* Ein Klick auf „Antwort prüfen“ oder Enter prüft die Eingabe. */
+    formular.addEventListener("submit", function (ereignis) {
+      ereignis.preventDefault();
+
+      const aktuellesRaetsel = raetsel[aktuelleNummer];
+      const eingabe = normalisieren(antwortFeld.value);
+      const loesung = normalisieren(aktuellesRaetsel.antwort);
+
+      farbenZuruecksetzen();
+      meldung.replaceChildren();
+
+      if (eingabe === loesung) {
+        document.body.classList.add("richtig");
+
+        const jubel = document.createElement("p");
+        jubel.className = "yippie";
+        jubel.textContent = "YIPPIE";
+
+        const erfolgstext = document.createElement("p");
+        erfolgstext.className = "erfolgstext";
+        erfolgstext.textContent = aktuellesRaetsel.erfolgstext;
+
+        meldung.append(jubel, erfolgstext);
       } else {
-        stern.setAttribute("hidden", "");
-        eingabe.value = "";
-        meldung.textContent = "Noch nicht richtig. Versuch es noch einmal!";
-        eingabe.focus();
+        document.body.classList.add("falsch");
+        meldung.textContent =
+          "Das ist leider noch nicht richtig. Versuch es noch einmal!";
+
+        antwortFeld.focus();
+        antwortFeld.select();
+      }
+    });
+
+    zurueck.addEventListener("click", function () {
+      farbenZuruecksetzen();
+      bereich.hidden = true;
+
+      if (letztesTuerchen) {
+        letztesTuerchen.focus();
       }
     });
   </script>
