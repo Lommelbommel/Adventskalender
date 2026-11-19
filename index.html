@@ -6,7 +6,7 @@
 
   <title>Adventskalender-Rätsel für Jori</title>
 
-  <!-- Schriftarten -->
+  <!-- Schriftarten laden -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -16,7 +16,7 @@
   >
 
   <style>
-    /* FARBPALETTE */
+    /* FARBEN */
 
     :root {
       --blau: #00345c;
@@ -30,8 +30,6 @@
       --antwort-schrift: #511f1a;
     }
 
-    /* ALLGEMEINES DESIGN */
-
     * {
       box-sizing: border-box;
     }
@@ -44,7 +42,7 @@
       color: var(--creme);
       font-family: Arial, sans-serif;
       text-align: center;
-      transition: background-color 0.4s, color 0.4s;
+      transition: background-color 0.35s, color 0.35s;
     }
 
     main {
@@ -56,7 +54,7 @@
       margin: 10px 0 20px;
       color: var(--pink);
       font-family: "Pacifico", cursive;
-      font-size: clamp(2.6rem, 7vw, 4.5rem);
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
       font-weight: bold;
       line-height: 1.5;
     }
@@ -69,7 +67,22 @@
       line-height: 1.6;
     }
 
-    /* TÜRCHEN */
+    button,
+    input {
+      font-family: Arial, sans-serif;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--pink);
+      outline-offset: 5px;
+    }
+
+    /* KALENDER */
 
     .kalender {
       display: grid;
@@ -86,22 +99,13 @@
       color: var(--creme);
       font-family: "Oswald", sans-serif;
       font-size: 2.5rem;
-      cursor: pointer;
       box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
-      transition:
-        transform 0.2s,
-        background-color 0.2s;
+      transition: transform 0.2s, background-color 0.2s;
     }
 
     .tuerchen:hover {
       transform: translateY(-4px);
       background-color: var(--rot);
-    }
-
-    button:focus-visible,
-    input:focus-visible {
-      outline: 3px solid var(--pink);
-      outline-offset: 5px;
     }
 
     /* RÄTSELBEREICH */
@@ -115,35 +119,39 @@
       scroll-margin-top: 20px;
     }
 
-    .raetselbereich h2 {
+    #raetselTitel {
       margin-top: 0;
+      font-size: 1.7rem;
     }
 
     #aufgabe {
-      font-size: 1.5rem;
-      line-height: 1.5;
+      font-size: 1.35rem;
+      line-height: 1.6;
       white-space: pre-line;
     }
 
-    /* EINGABEFELD FÜR RECHEN- ODER WORTRÄTSEL */
+    /* EINFACHE TEXTEINGABE */
 
-    label {
+    .eingabe-label {
       display: block;
       margin: 22px 0 10px;
     }
 
     input {
-      display: block;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto 16px;
+      min-width: 0;
       padding: 13px;
       border: 2px solid var(--beere);
       border-radius: 8px;
       background-color: var(--creme);
       color: var(--blau);
-      font-family: Arial, sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+    }
+
+    .einzel-eingabe {
+      display: block;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto 16px;
       text-align: center;
     }
 
@@ -153,32 +161,32 @@
       border-radius: 8px;
       background-color: var(--creme);
       color: var(--blau);
-      font-family: Arial, sans-serif;
       font-size: 1rem;
-      cursor: pointer;
     }
 
-    /* ANTWORTAUSWAHL A, B UND C */
+    .zurueck {
+      margin-top: 24px;
+    }
+
+    /* AUSWAHLFRAGEN */
 
     .auswahl {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      margin: 25px auto 0;
       max-width: 750px;
+      margin: 25px auto 0;
     }
 
     .auswahlknopf {
-      min-height: 110px;
-      padding: 18px 12px;
+      min-height: 105px;
+      padding: 18px 14px;
       border: 2px solid var(--pink);
       border-radius: 12px;
       background-color: var(--creme);
       color: var(--blau);
-      font-family: Arial, sans-serif;
       font-size: 1.1rem;
       line-height: 1.5;
-      cursor: pointer;
       transition: transform 0.2s;
     }
 
@@ -189,12 +197,73 @@
     .auswahlbuchstabe {
       display: block;
       margin-bottom: 6px;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: bold;
     }
 
     .auswahlknopf[aria-pressed="true"] {
-      border: 4px solid currentColor;
+      outline: 3px solid currentColor;
+      outline-offset: -7px;
+    }
+
+    /* BEWERTUNG HINTER TÜRCHEN 24 */
+
+    .bewertung {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .bewertung .auswahlknopf {
+      min-height: 85px;
+      padding: 12px;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    /* MEHRERE EINGABEFELDER */
+
+    .mehrfach-liste {
+      display: grid;
+      gap: 12px;
+      max-width: 650px;
+      margin: 25px auto;
+    }
+
+    .eingabe-zeile {
+      display: grid;
+      grid-template-columns: 45px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .eingabe-zeile input {
+      width: 100%;
+    }
+
+    .rechenliste {
+      max-width: 450px;
+    }
+
+    .rechenliste .eingabe-zeile {
+      grid-template-columns: 100px minmax(0, 1fr);
+    }
+
+    .rechenliste label {
+      font-size: 1.3rem;
+    }
+
+    /* MARKIERUNG EINZELNER EINGABEFELDER */
+
+    input.feld-falsch {
+      border: 3px solid #a00000;
+      background-color: #ffd0d0;
+      color: #511f1a;
+    }
+
+    input.feld-richtig {
+      border: 3px solid #236b2d;
+      background-color: #d8f5d3;
+      color: #511f1a;
     }
 
     /* RÜCKMELDUNG */
@@ -206,27 +275,30 @@
 
     .yippie {
       margin: 10px 0;
-      font-family: Arial, sans-serif;
       font-size: clamp(3rem, 10vw, 5rem);
       font-weight: bold;
     }
 
     .erfolgstext {
       font-size: 1.4rem;
+      white-space: pre-line;
     }
 
     .erklaerung {
-      max-width: 650px;
+      max-width: 680px;
       margin: 18px auto 0;
       font-size: 1.15rem;
       line-height: 1.7;
     }
 
-    .zurueck {
-      margin-top: 20px;
+    .pause {
+      max-width: 650px;
+      margin: 25px auto;
+      font-size: 1.7rem;
+      line-height: 1.7;
     }
 
-    /* FARBEN NACH DER ANTWORTPRÜFUNG */
+    /* HINTERGRUNDFARBEN NACH DER PRÜFUNG */
 
     body.richtig {
       background-color: var(--richtig);
@@ -256,6 +328,10 @@
     /* HANDYANSICHT */
 
     @media (max-width: 600px) {
+      body {
+        padding: 25px 15px;
+      }
+
       .kalender {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
@@ -269,8 +345,22 @@
         grid-template-columns: 1fr;
       }
 
-      .auswahlknopf {
-        min-height: 85px;
+      .bewertung {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .bewertung .auswahlknopf {
+        padding: 8px;
+        min-height: 70px;
+      }
+
+      .raetselbereich {
+        padding: 24px 15px;
+      }
+
+      #aufgabe {
+        font-size: 1.2rem;
       }
     }
 
@@ -300,33 +390,15 @@
 
       <p id="aufgabe"></p>
 
-      <!-- Für Aufgaben mit freier Texteingabe -->
-      <form id="antwortFormular" hidden>
-        <label for="antwort">Deine Antwort:</label>
+      <!-- Hier erscheint die jeweilige Eingabe oder Auswahl. -->
+      <div id="interaktion"></div>
 
-        <input
-          type="text"
-          id="antwort"
-          placeholder="Antwort eingeben"
-          autocomplete="off"
-          required
-        >
-
-        <button class="knopf" type="submit">
-          Antwort prüfen
-        </button>
-      </form>
-
-      <!-- Für Aufgaben mit Antwortauswahl -->
       <div
-        class="auswahl"
-        id="auswahl"
-        role="group"
-        aria-label="Wähle eine Antwort"
-        hidden
+        id="meldung"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
       ></div>
-
-      <div id="meldung" role="status" aria-live="polite"></div>
 
       <button class="knopf zurueck" id="zurueck" type="button">
         Zurück zum Kalender
@@ -336,23 +408,24 @@
 
   <script>
     /*
-      HIER DEINE RÄTSEL EINTRAGEN.
+      DEINE ZWÖLF RÄTSEL
 
-      typ: "eingabe"
-      Zeigt ein Feld zum Eintippen der Antwort.
+      typ: "eingabe"   → ein Texteingabefeld
+      typ: "auswahl"   → anklickbare Antwortmöglichkeiten
+      typ: "mehrfach"  → mehrere Eingabefelder
+      typ: "pause"     → Nachricht ohne Rätsel
+      typ: "bewertung" → fünf Felder mit einer 5
 
-      typ: "auswahl"
-      Zeigt anklickbare Antwortmöglichkeiten.
-
-      typ: "platzhalter"
-      Zeigt zunächst nur den Aufgabentext.
+      Bei Auswahlfragen beginnt die Zählung der
+      richtigen Option bei 0:
+      0 = A, 1 = B, 2 = C, 3 = D.
     */
 
     const raetsel = {
       2: {
         typ: "eingabe",
         aufgabe: "(9 − 5) × 7 + 6 × 4 = ?",
-        antwort: "52",
+        antworten: ["52"],
         erfolgstext:
           "Du darfst das Türchen mit dem Smiley öffnen."
       },
@@ -363,21 +436,13 @@
           "Wie viele handelsübliche 0,5-Liter-Bierdosen müsste man ungefähr aufeinanderstapeln, um die Höhe des Steglitzer Bierpinsels zu erreichen?\n\nRechne mit 17 cm pro Dose.",
 
         optionen: [
-          {
-            buchstabe: "A",
-            text: "Etwa 180 Dosen"
-          },
-          {
-            buchstabe: "B",
-            text: "Etwa 280 Dosen"
-          },
-          {
-            buchstabe: "C",
-            text: "Etwa 420 Dosen"
-          }
+          "Etwa 180 Dosen",
+          "Etwa 280 Dosen",
+          "Etwa 420 Dosen"
         ],
 
-        antwort: "B",
+        richtig: 1,
+
         erfolgstext: "Du hast das Rätsel gelöst!",
 
         erklaerung:
@@ -385,80 +450,301 @@
       },
 
       6: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "auswahl",
+        aufgabe:
+          "Steglitz – was wurde hier gegründet?\n\nFür welche Universität fand 1948 im Titania-Palast die Gründungsveranstaltung statt?",
+
+        optionen: [
+          "Humboldt-Universität",
+          "Technische Universität Berlin",
+          "Freie Universität Berlin",
+          "Universität der Künste Berlin"
+        ],
+
+        richtig: 2,
+
+        erfolgstext:
+          "Du darfst das Geschenk mit den Worten „Ach, diese Lücke, diese entsetzliche Lücke“ öffnen."
       },
 
       8: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "eingabe",
+        aufgabe:
+          "Schreibe die 7er-Malfolge von 1 × 7 bis 10 × 7 auf.\n\nOhne Komma und Leerzeichen.",
+
+        antworten: ["7142128354249566370"],
+
+        erfolgstext:
+          "Du darfst das Geschenk mit „7x7=feiner Sand“ öffnen."
       },
 
       10: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "mehrfach",
+        aufgabe:
+          "Wie heißen die Stationen der U9 von Walther-Schreiber-Platz bis Westhafen?\n\nTrage alle zwölf Stationen in der richtigen Reihenfolge ein und klicke auf „Bestätigen“.",
+
+        felder: [
+          {
+            label: "1.",
+            antworten: ["Walther-Schreiber-Platz"]
+          },
+          {
+            label: "2.",
+            antworten: ["Friedrich-Wilhelm-Platz"]
+          },
+          {
+            label: "3.",
+            antworten: ["Bundesplatz"]
+          },
+          {
+            label: "4.",
+            antworten: ["Berliner Straße"]
+          },
+          {
+            label: "5.",
+            antworten: ["Güntzelstraße"]
+          },
+          {
+            label: "6.",
+            antworten: ["Spichernstraße"]
+          },
+          {
+            label: "7.",
+            antworten: ["Kurfürstendamm"]
+          },
+          {
+            label: "8.",
+            antworten: ["Zoologischer Garten"]
+          },
+          {
+            label: "9.",
+            antworten: ["Hansaplatz"]
+          },
+          {
+            label: "10.",
+            antworten: ["Turmstraße"]
+          },
+          {
+            label: "11.",
+            antworten: ["Birkenstraße"]
+          },
+          {
+            label: "12.",
+            antworten: ["Westhafen"]
+          }
+        ],
+
+        erfolgstext:
+          "Du darfst das Geschenk mit dem Wort „U9“ öffnen."
       },
 
       12: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "auswahl",
+        aufgabe:
+          "Was sorgte auf einer der ersten kommerziellen Weihnachtskarten von 1843 für Empörung?",
+
+        optionen: [
+          "Der Weihnachtsmann trug keine Hose.",
+          "Kinder wurden beim Weintrinken dargestellt.",
+          "Eine Kirche stand auf dem Kopf.",
+          "Die Karte enthielt Werbung für Zahnersatz."
+        ],
+
+        richtig: 1,
+
+        erfolgstext:
+          "Du darfst das Geschenk mit der Weihnachtsmütze öffnen."
       },
 
       14: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "auswahl",
+        aufgabe:
+          "Steglitz – bitte den alten Namen!\n\nWie hieß Steglitz früher tatsächlich?",
+
+        optionen: [
+          "Stieglitz",
+          "Stegelitz",
+          "Steglin",
+          "Stachelitz"
+        ],
+
+        richtig: 1,
+
+        erfolgstext:
+          "Du darfst das Geschenk mit dem Fragezeichen öffnen.",
+
+        erklaerung:
+          "Stegelitz. Im Zuge des Zusammenschlusses der Kolonie mit dem alten Dorf wurde daraus 1870 „Steglitz“. Ein „e“ blieb auf der Strecke."
       },
 
       16: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "mehrfach",
+        rechnen: true,
+
+        aufgabe:
+          "Löse die sechs Rechenaufgaben.\n\nTrage alle Ergebnisse ein und klicke auf „Bestätigen“.",
+
+        felder: [
+          {
+            label: "5 × 6 =",
+            antworten: ["30"]
+          },
+          {
+            label: "9 × 3 =",
+            antworten: ["27"]
+          },
+          {
+            label: "8 × 4 =",
+            antworten: ["32"]
+          },
+          {
+            label: "7 × 6 =",
+            antworten: ["42"]
+          },
+          {
+            label: "4 × 4 =",
+            antworten: ["16"]
+          },
+          {
+            label: "9 × 8 =",
+            antworten: ["72"]
+          }
+        ],
+
+        erfolgstext:
+          "Du darfst das Türchen mit der Katze öffnen."
       },
 
       18: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "pause",
+        aufgabe:
+          "Heute hast du dir mal eine Pause verdient.\n\nÖffne den Stern."
       },
 
       20: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "auswahl",
+        aufgabe: "Wie viele Meter lang ist die Schlossstraße?",
+
+        optionen: [
+          "1,9 Kilometer",
+          "2,5 Kilometer",
+          "2,1 Kilometer"
+        ],
+
+        richtig: 2,
+
+        erfolgstext:
+          "Du darfst das Türchen mit dem Wort „Schloss“ öffnen."
       },
 
       22: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "eingabe",
+        aufgabe:
+          "Welcher Wochentag war der 21.07.2026?",
+
+        antworten: ["Dienstag"],
+
+        erfolgstext:
+          "Du darfst das Geschenk mit der „21“ öffnen."
       },
 
       24: {
-        typ: "platzhalter",
-        aufgabe: "Hier wartet bald dein nächstes Rätsel!"
+        typ: "bewertung",
+        aufgabe:
+          "Bewerte das Quiz.\n\n1 ist schlecht und 5 ist superspitze.",
+
+        optionen: ["5", "5", "5", "5", "5"],
+
+        richtig: 4,
+
+        erfolgstext:
+          "Ist ja nur noch ein Türchen übrig."
       }
     };
 
-    /* AB HIER WERDEN DIE FUNKTIONEN GESTEUERT. */
+    /* ELEMENTE DER WEBSEITE */
 
     const kalender = document.getElementById("kalender");
     const bereich = document.getElementById("raetselbereich");
     const titel = document.getElementById("raetselTitel");
     const aufgabe = document.getElementById("aufgabe");
-    const formular = document.getElementById("antwortFormular");
-    const antwortFeld = document.getElementById("antwort");
-    const auswahl = document.getElementById("auswahl");
+    const interaktion = document.getElementById("interaktion");
     const meldung = document.getElementById("meldung");
     const zurueck = document.getElementById("zurueck");
 
     let aktuelleNummer = null;
     let letztesTuerchen = null;
 
+    /* HILFSFUNKTIONEN */
+
     function farbenZuruecksetzen() {
       document.body.classList.remove("richtig", "falsch");
     }
 
     function normalisieren(text) {
-      return String(text).trim().toLocaleLowerCase("de-DE");
+      return String(text)
+        .normalize("NFC")
+        .trim()
+        .toLocaleLowerCase("de-DE")
+        .replace(/ß/g, "ss")
+        .replace(/[‐‑‒–—−]/g, "-")
+        .replace(/\s*-\s*/g, "-")
+        .replace(/\s+/g, " ");
     }
 
-    /* TÜRCHEN ERSTELLEN */
+    function antwortIstRichtig(eingabe, erlaubteAntworten) {
+      return erlaubteAntworten.some(function (antwort) {
+        return normalisieren(eingabe) === normalisieren(antwort);
+      });
+    }
+
+    function knopfErstellen(text) {
+      const knopf = document.createElement("button");
+
+      knopf.type = "submit";
+      knopf.className = "knopf";
+      knopf.textContent = text;
+
+      return knopf;
+    }
+
+    /* ERFOLGS- UND FEHLERMELDUNGEN */
+
+    function erfolgAnzeigen(raetselDaten) {
+      farbenZuruecksetzen();
+      document.body.classList.add("richtig");
+      meldung.replaceChildren();
+
+      const jubel = document.createElement("p");
+      jubel.className = "yippie";
+      jubel.textContent = "YIPPIE";
+
+      const text = document.createElement("p");
+      text.className = "erfolgstext";
+      text.textContent = raetselDaten.erfolgstext;
+
+      meldung.append(jubel, text);
+
+      if (raetselDaten.erklaerung) {
+        const erklaerung = document.createElement("p");
+
+        erklaerung.className = "erklaerung";
+        erklaerung.textContent = raetselDaten.erklaerung;
+
+        meldung.appendChild(erklaerung);
+      }
+    }
+
+    function fehlerAnzeigen(text) {
+      farbenZuruecksetzen();
+      document.body.classList.add("falsch");
+
+      meldung.textContent =
+        text ||
+        "Das ist leider noch nicht richtig. Versuch es noch einmal!";
+    }
+
+    /* DIE ZWÖLF TÜRCHEN ERSTELLEN */
 
     Object.keys(raetsel).forEach(function (nummer) {
       const knopf = document.createElement("button");
@@ -485,60 +771,33 @@
     function tuerchenOeffnen(nummer) {
       aktuelleNummer = nummer;
 
-      const aktuellesRaetsel = raetsel[nummer];
+      const daten = raetsel[nummer];
 
       farbenZuruecksetzen();
+      meldung.replaceChildren();
+      interaktion.replaceChildren();
 
       titel.textContent = "Türchen " + nummer;
-      aufgabe.textContent = aktuellesRaetsel.aufgabe;
+      aufgabe.textContent = daten.aufgabe;
+      aufgabe.className = "";
 
-      antwortFeld.value = "";
-      meldung.replaceChildren();
-      auswahl.replaceChildren();
-
-      formular.hidden = true;
-      auswahl.hidden = true;
-
-      if (aktuellesRaetsel.typ === "eingabe") {
-        formular.hidden = false;
+      if (daten.typ === "eingabe") {
+        texteingabeErstellen(daten);
       }
 
-      if (aktuellesRaetsel.typ === "auswahl") {
-        auswahl.hidden = false;
+      if (
+        daten.typ === "auswahl" ||
+        daten.typ === "bewertung"
+      ) {
+        auswahlErstellen(daten);
+      }
 
-        aktuellesRaetsel.optionen.forEach(function (option) {
-          const knopf = document.createElement("button");
+      if (daten.typ === "mehrfach") {
+        mehrfachEingabeErstellen(daten);
+      }
 
-          knopf.type = "button";
-          knopf.className = "auswahlknopf";
-          knopf.setAttribute("aria-pressed", "false");
-
-          const buchstabe = document.createElement("span");
-          buchstabe.className = "auswahlbuchstabe";
-          buchstabe.textContent = option.buchstabe + ")";
-
-          const text = document.createElement("span");
-          text.textContent = option.text;
-
-          knopf.append(buchstabe, text);
-
-          knopf.addEventListener("click", function () {
-            auswahl.querySelectorAll("button").forEach(
-              function (andererKnopf) {
-                andererKnopf.setAttribute(
-                  "aria-pressed",
-                  "false"
-                );
-              }
-            );
-
-            knopf.setAttribute("aria-pressed", "true");
-
-            antwortPruefen(option.buchstabe);
-          });
-
-          auswahl.appendChild(knopf);
-        });
+      if (daten.typ === "pause") {
+        aufgabe.className = "pause";
       }
 
       bereich.hidden = false;
@@ -551,61 +810,228 @@
       titel.focus({ preventScroll: true });
     }
 
-    /* ANTWORT PRÜFEN: FÜR BEIDE AUFGABENTYPEN */
+    /* AUFGABEN MIT EINEM TEXTEINGABEFELD */
 
-    function antwortPruefen(eingabe) {
-      const aktuellesRaetsel = raetsel[aktuelleNummer];
+    function texteingabeErstellen(daten) {
+      const formular = document.createElement("form");
 
-      farbenZuruecksetzen();
-      meldung.replaceChildren();
+      const label = document.createElement("label");
+      label.className = "eingabe-label";
+      label.htmlFor = "einzelAntwort";
+      label.textContent = "Deine Antwort:";
 
-      const istRichtig =
-        normalisieren(eingabe) ===
-        normalisieren(aktuellesRaetsel.antwort);
+      const eingabe = document.createElement("input");
+      eingabe.type = "text";
+      eingabe.id = "einzelAntwort";
+      eingabe.className = "einzel-eingabe";
+      eingabe.placeholder = "Antwort eingeben";
+      eingabe.autocomplete = "off";
+      eingabe.required = true;
 
-      if (istRichtig) {
-        document.body.classList.add("richtig");
+      const knopf = knopfErstellen("Antwort prüfen");
 
-        const jubel = document.createElement("p");
-        jubel.className = "yippie";
-        jubel.textContent = "YIPPIE";
+      formular.append(label, eingabe, knopf);
 
-        const erfolgstext = document.createElement("p");
-        erfolgstext.className = "erfolgstext";
-        erfolgstext.textContent =
-          aktuellesRaetsel.erfolgstext ||
-          "Du hast das Rätsel gelöst!";
+      formular.addEventListener("submit", function (ereignis) {
+        ereignis.preventDefault();
 
-        meldung.append(jubel, erfolgstext);
-
-        if (aktuellesRaetsel.erklaerung) {
-          const erklaerung = document.createElement("p");
-
-          erklaerung.className = "erklaerung";
-          erklaerung.textContent =
-            aktuellesRaetsel.erklaerung;
-
-          meldung.appendChild(erklaerung);
+        if (antwortIstRichtig(eingabe.value, daten.antworten)) {
+          erfolgAnzeigen(daten);
+        } else {
+          fehlerAnzeigen();
+          eingabe.focus();
+          eingabe.select();
         }
-      } else {
-        document.body.classList.add("falsch");
+      });
 
-        meldung.textContent =
-          "Das ist leider noch nicht richtig. Versuch es noch einmal!";
-
-        if (aktuellesRaetsel.typ === "eingabe") {
-          antwortFeld.focus();
-          antwortFeld.select();
-        }
-      }
+      interaktion.appendChild(formular);
     }
 
-    /* EINGABE PER KNOPFDRUCK ODER ENTER PRÜFEN */
+    /* AUSWAHLFRAGEN UND BEWERTUNG */
 
-    formular.addEventListener("submit", function (ereignis) {
-      ereignis.preventDefault();
-      antwortPruefen(antwortFeld.value);
-    });
+    function auswahlErstellen(daten) {
+      const auswahl = document.createElement("div");
+
+      auswahl.className = "auswahl";
+      auswahl.setAttribute("role", "group");
+
+      auswahl.setAttribute(
+        "aria-label",
+        daten.typ === "bewertung"
+          ? "Bewertung auswählen"
+          : "Antwort auswählen"
+      );
+
+      if (daten.typ === "bewertung") {
+        auswahl.classList.add("bewertung");
+      }
+
+      daten.optionen.forEach(function (option, index) {
+        const knopf = document.createElement("button");
+
+        knopf.type = "button";
+        knopf.className = "auswahlknopf";
+        knopf.setAttribute("aria-pressed", "false");
+
+        if (daten.typ === "bewertung") {
+          knopf.textContent = option;
+
+          knopf.setAttribute(
+            "aria-label",
+            "5 – Auswahlfeld " + (index + 1)
+          );
+        } else {
+          const buchstabe = document.createElement("span");
+
+          buchstabe.className = "auswahlbuchstabe";
+          buchstabe.textContent =
+            String.fromCharCode(65 + index) + ")";
+
+          const text = document.createElement("span");
+          text.textContent = option;
+
+          knopf.append(buchstabe, text);
+        }
+
+        knopf.addEventListener("click", function () {
+          auswahl.querySelectorAll("button").forEach(
+            function (andererKnopf) {
+              andererKnopf.setAttribute(
+                "aria-pressed",
+                "false"
+              );
+            }
+          );
+
+          knopf.setAttribute("aria-pressed", "true");
+
+          if (index === daten.richtig) {
+            erfolgAnzeigen(daten);
+          } else {
+            fehlerAnzeigen();
+          }
+        });
+
+        auswahl.appendChild(knopf);
+      });
+
+      interaktion.appendChild(auswahl);
+    }
+
+    /* AUFGABEN MIT MEHREREN EINGABEFELDERN */
+
+    function mehrfachEingabeErstellen(daten) {
+      const formular = document.createElement("form");
+
+      const liste = document.createElement("div");
+      liste.className = "mehrfach-liste";
+
+      if (daten.rechnen) {
+        liste.classList.add("rechenliste");
+      }
+
+      const eingaben = [];
+
+      daten.felder.forEach(function (feld, index) {
+        const zeile = document.createElement("div");
+        zeile.className = "eingabe-zeile";
+
+        const id =
+          "tuer-" + aktuelleNummer + "-feld-" + index;
+
+        const label = document.createElement("label");
+        label.htmlFor = id;
+        label.textContent = feld.label;
+
+        const eingabe = document.createElement("input");
+
+        eingabe.id = id;
+        eingabe.type = "text";
+        eingabe.autocomplete = "off";
+        eingabe.required = true;
+
+        if (daten.rechnen) {
+          eingabe.inputMode = "numeric";
+          eingabe.placeholder = "Ergebnis";
+        } else {
+          eingabe.placeholder = "Station " + (index + 1);
+        }
+
+        /*
+          Beim Korrigieren wird die alte Markierung
+          dieses Feldes entfernt.
+        */
+        eingabe.addEventListener("input", function () {
+          eingabe.classList.remove(
+            "feld-falsch",
+            "feld-richtig"
+          );
+
+          eingabe.removeAttribute("aria-invalid");
+        });
+
+        eingaben.push(eingabe);
+        zeile.append(label, eingabe);
+        liste.appendChild(zeile);
+      });
+
+      const knopf = knopfErstellen("Bestätigen");
+
+      formular.append(liste, knopf);
+
+      formular.addEventListener("submit", function (ereignis) {
+        ereignis.preventDefault();
+
+        let anzahlFehler = 0;
+        let erstesFalschesFeld = null;
+
+        eingaben.forEach(function (eingabe, index) {
+          const feld = daten.felder[index];
+
+          const istRichtig = antwortIstRichtig(
+            eingabe.value,
+            feld.antworten
+          );
+
+          eingabe.classList.toggle(
+            "feld-richtig",
+            istRichtig
+          );
+
+          eingabe.classList.toggle(
+            "feld-falsch",
+            !istRichtig
+          );
+
+          eingabe.setAttribute(
+            "aria-invalid",
+            String(!istRichtig)
+          );
+
+          if (!istRichtig) {
+            anzahlFehler++;
+
+            if (!erstesFalschesFeld) {
+              erstesFalschesFeld = eingabe;
+            }
+          }
+        });
+
+        if (anzahlFehler === 0) {
+          erfolgAnzeigen(daten);
+        } else {
+          const text = anzahlFehler === 1
+            ? "Ein Eintrag ist noch nicht richtig. Korrigiere das rot markierte Feld und klicke erneut auf „Bestätigen“."
+            : anzahlFehler +
+              " Einträge sind noch nicht richtig. Korrigiere die rot markierten Felder und klicke erneut auf „Bestätigen“.";
+
+          fehlerAnzeigen(text);
+          erstesFalschesFeld.focus();
+        }
+      });
+
+      interaktion.appendChild(formular);
+    }
 
     /* ZURÜCK ZUM KALENDER */
 
@@ -620,4 +1046,5 @@
   </script>
 </body>
 </html>
+
 
